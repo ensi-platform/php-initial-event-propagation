@@ -4,5 +4,5 @@ namespace Ensi\InitiatorPropagation;
 
 class Config
 {
-   public const REQUEST_HEADER = 'X-Initiator';
+    public const REQUEST_HEADER = 'X-Initiator';
 }

@@ -13,8 +13,7 @@ class InitiatorDTO
         public string $userType = '',
         public string $realUserId = '',
         public string $realUserType = '',
-    )
-    {
+    ) {
     }
 
     public static function fromScratch(
@@ -23,8 +22,7 @@ class InitiatorDTO
         string $realUserId = '',
         string $realUserType = '',
         string $correlationId = ''
-    ): static
-    {
+    ): static {
         return new static(
             correlationId: $correlationId ?: Uuid::uuid4()->toString(),
             timestamp: (int) hrtime(true),
@@ -44,7 +42,7 @@ class InitiatorDTO
             $params[$key] = $value ?? null;
         }
 
-        
+
 
         return new static(
             correlationId: $params['correlationId'],
@@ -60,7 +58,7 @@ class InitiatorDTO
     {
         $array = array_filter($this->toArray());
 
-        return implode(',', array_map(fn($key, $value) => "$key=$value", array_keys($array), array_values($array)));
+        return implode(',', array_map(fn ($key, $value) => "$key=$value", array_keys($array), array_values($array)));
     }
 
     public function toArray(): array
