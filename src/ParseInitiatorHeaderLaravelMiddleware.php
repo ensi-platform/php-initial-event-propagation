@@ -5,7 +5,7 @@ namespace Ensi\InitiatorPropagation;
 use Closure;
 use Illuminate\Http\Request;
 
-class InitiatorLaravelMiddleware
+class ParseInitiatorHeaderLaravelMiddleware
 {
     public function handle(Request $request, Closure $next): mixed
     {

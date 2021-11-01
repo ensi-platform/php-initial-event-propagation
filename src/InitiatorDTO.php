@@ -42,8 +42,6 @@ class InitiatorDTO
             $params[$key] = $value ?? null;
         }
 
-
-
         return new static(
             correlationId: $params['correlationId'],
             timestamp: $params['timestamp'],
