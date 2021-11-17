@@ -1,6 +1,11 @@
 # PHP Initiator Propagation
 
-Define factories to generate any kind of object or even arrays for unit tests.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ensi/initiator-propagation.svg?style=flat-square)](https://packagist.org/packages/ensi/initiator-propagation)
+[![Tests](https://github.com/ensi-platform/php-initiator-propagation/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/ensi-platform/php-initiator-propagation/actions/workflows/run-tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/ensi/initiator-propagation.svg?style=flat-square)](https://packagist.org/packages/ensi/initiator-propagation)
+
+This package helps to propagate event initiator data to other backend services
+[Laravel Bridge](https://github.com/ensi-platform/laravel-initiator-propagation/)
 
 ## Installation
 
