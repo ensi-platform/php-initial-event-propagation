@@ -2,13 +2,17 @@
 
 namespace Ensi\InitiatorPropagation;
 
+use DateTime;
+use DateTimeZone;
 use Ramsey\Uuid\Uuid;
 
 class InitiatorDTO
 {
     public function __construct(
         public string $correlationId,
-        public int $timestamp,
+        public string $startedAt,
+        public string $app,
+        public string $entrypoint,
         public string $userId = '',
         public string $userType = '',
         public string $realUserId = '',
@@ -17,6 +21,8 @@ class InitiatorDTO
     }
 
     public static function fromScratch(
+        string $app,
+        string $entrypoint,
         string $userId = '',
         string $userType = '',
         string $realUserId = '',
@@ -25,7 +31,9 @@ class InitiatorDTO
     ): static {
         return new static(
             correlationId: $correlationId ?: Uuid::uuid4()->toString(),
-            timestamp: (int) hrtime(true),
+            startedAt: (new DateTime())->setTimezone(new DateTimeZone("UTC"))->format('Y-m-d\TH:i:s.u\Z'),
+            app: $app,
+            entrypoint: $entrypoint,
             userId: $userId,
             userType: $userType,
             realUserId: $realUserId,
@@ -33,18 +41,22 @@ class InitiatorDTO
         );
     }
 
+    /**
+     * @throws EmptySerializedFieldException if required fields are not set in serialized data
+     */
     public static function fromSerializedString(string $serializedData): static
     {
         $params = [];
-        ray($serializedData);
         foreach (explode(",", $serializedData) as $keyWithValue) {
             [$key, $value] = explode("=", $keyWithValue);
-            $params[$key] = $value ?? null;
+            $params[$key] = isset($value) ? str_replace('__COMMA__', ',', $value) : null;
         }
 
         return new static(
-            correlationId: $params['correlationId'],
-            timestamp: $params['timestamp'],
+            correlationId: $params['correlationId'] ?? throw new EmptySerializedFieldException("correlationId"),
+            startedAt: $params['startedAt'] ?? throw new EmptySerializedFieldException("startedAt"),
+            app: $params['app'] ?? throw new EmptySerializedFieldException("app"),
+            entrypoint: $params['entrypoint'] ?? throw new EmptySerializedFieldException("entrypoint"),
             userId: $params['userId'] ?? '',
             userType: $params['userType'] ?? '',
             realUserId: $params['realUserId'] ?? '',
@@ -55,15 +67,22 @@ class InitiatorDTO
     public function serialize(): string
     {
         $array = array_filter($this->toArray());
+        $mappedArray = array_map(
+            fn ($key, $value) => $key . '=' . str_replace(',', '__COMMA__', $value),
+            array_keys($array),
+            array_values($array)
+        );
 
-        return implode(',', array_map(fn ($key, $value) => "$key=$value", array_keys($array), array_values($array)));
+        return implode(',', $mappedArray);
     }
 
     public function toArray(): array
     {
         return [
             'correlationId' => $this->correlationId,
-            'timestamp' => $this->timestamp,
+            'startedAt' => $this->startedAt,
+            'app' => $this->app,
+            'entrypoint' => $this->entrypoint,
             'userId' => $this->userId,
             'userType' => $this->userType,
             'realUserId' => $this->realUserId,

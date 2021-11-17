@@ -19,11 +19,16 @@ use Ensi\InitiatorPropagation\InitiatorDTO;
 
 InitiatorHolder::getInstance()
     ->setInitiator(
-        InitiatorDTO::fromScratch(userId: "1", userType: "admin")
+        InitiatorDTO::fromScratch(
+            userId: "1",
+            userType: "admin",
+            app: "mobile-api-gateway",
+            entrypoint: "/api/v1/users/{id}"
+        )
     );
 ```
 
-If you are not in entrypoint context to need to get Initiator from `X-Initiator` request header instead of creating it from scratch:
+If you are not in initial entrypoint context to need to get Initiator from `X-Initiator` request header instead of creating it from scratch:
 
 ```php
 
@@ -50,17 +55,12 @@ function some_middleware(callable $handler)
         $inititiator = InitiatorHolder::getInstance()->getInitiator();
 
         return $handler(
-            $inititiator ? $request->withHeader(Config::REQUEST_HEADER, $inititiator->serialize()) : $request, 
+            $inititiator ? $request->withHeader(Config::REQUEST_HEADER, $inititiator->serialize()) : $request,
             $options
         );
     };
 }
 ```
-
-### Laravel 
-
-You can use build-in `Ensi\InitiatorPropagation\ParseInitiatorHeaderLaravelMiddleware` to populate `InitiatorHolder` with data from incoming request.
-It's also recommended to add `$this->app->instance(InitiatorHolder::class, InitiatorHolder::getInstance());` to one of your service providers to make `InitiatorHolder` singleton injectable via Laravel Service Container
 
 ### Guzzle
 

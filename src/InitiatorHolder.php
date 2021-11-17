@@ -8,10 +8,6 @@ class InitiatorHolder
 
     protected ?InitiatorDTO $initiator = null;
 
-    protected function __construct()
-    {
-    }
-
     public static function getInstance(): static
     {
         $className = static::class;
