@@ -27,11 +27,12 @@ class InitiatorDTO
         string $userType = '',
         string $realUserId = '',
         string $realUserType = '',
-        string $correlationId = ''
+        string $correlationId = '',
+        string $startedAt = ''
     ): static {
         return new static(
             correlationId: $correlationId ?: Uuid::uuid4()->toString(),
-            startedAt: (new DateTime())->setTimezone(new DateTimeZone("UTC"))->format('Y-m-d\TH:i:s.u\Z'),
+            startedAt: $startedAt ?: (new DateTime())->setTimezone(new DateTimeZone("UTC"))->format('Y-m-d\TH:i:s.u\Z'),
             app: $app,
             entrypoint: $entrypoint,
             userId: $userId,
