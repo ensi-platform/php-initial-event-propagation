@@ -6,7 +6,7 @@ class InitialEventHolder
 {
     private static array $instances = [];
 
-    protected ?InitialEventDTO $initiator = null;
+    protected ?InitialEventDTO $initialEvent = null;
 
     public static function getInstance(): static
     {
@@ -18,15 +18,15 @@ class InitialEventHolder
         return self::$instances[$className];
     }
 
-    public function setInitiator(InitialEventDTO $initiator): static
+    public function setInitialEvent(InitialEventDTO $initialEvent): static
     {
-        $this->initiator = $initiator;
+        $this->initialEvent = $initialEvent;
 
         return $this;
     }
 
-    public function getInitiator(): ?InitialEventDTO
+    public function getInitialEvent(): ?InitialEventDTO
     {
-        return $this->initiator;
+        return $this->initialEvent;
     }
 }
