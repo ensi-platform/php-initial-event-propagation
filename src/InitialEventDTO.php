@@ -1,16 +1,16 @@
 <?php
 
-namespace Ensi\InitiatorPropagation;
+namespace Ensi\InitialEventPropagation;
 
 use DateTime;
 use DateTimeZone;
 use Ramsey\Uuid\Uuid;
 
-class InitiatorDTO
+class InitialEventDTO
 {
     public function __construct(
         public string $correlationId,
-        public string $startedAt,
+        public string $timestamp,
         public string $app,
         public string $entrypoint,
         public string $userId = '',
@@ -28,11 +28,11 @@ class InitiatorDTO
         string $realUserId = '',
         string $realUserType = '',
         string $correlationId = '',
-        string $startedAt = ''
+        string $timestamp = ''
     ): static {
         return new static(
             correlationId: $correlationId ?: Uuid::uuid4()->toString(),
-            startedAt: $startedAt ?: (new DateTime())->setTimezone(new DateTimeZone("UTC"))->format('Y-m-d\TH:i:s.u\Z'),
+            timestamp: $timestamp ?: (new DateTime())->setTimezone(new DateTimeZone("UTC"))->format('Y-m-d\TH:i:s.u\Z'),
             app: $app,
             entrypoint: $entrypoint,
             userId: $userId,
@@ -55,7 +55,7 @@ class InitiatorDTO
 
         return new static(
             correlationId: $params['correlationId'] ?? throw new EmptySerializedFieldException("correlationId"),
-            startedAt: $params['startedAt'] ?? throw new EmptySerializedFieldException("startedAt"),
+            timestamp: $params['timestamp'] ?? throw new EmptySerializedFieldException("timestamp"),
             app: $params['app'] ?? throw new EmptySerializedFieldException("app"),
             entrypoint: $params['entrypoint'] ?? throw new EmptySerializedFieldException("entrypoint"),
             userId: $params['userId'] ?? '',
@@ -81,7 +81,7 @@ class InitiatorDTO
     {
         return [
             'correlationId' => $this->correlationId,
-            'startedAt' => $this->startedAt,
+            'timestamp' => $this->timestamp,
             'app' => $this->app,
             'entrypoint' => $this->entrypoint,
             'userId' => $this->userId,

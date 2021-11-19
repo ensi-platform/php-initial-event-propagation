@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ensi\\InitiatorPropagation\\": "src"
+            "Ensi\\InitialEventPropagation\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ensi\\InitiatorPropagation\\Tests\\": "tests"
+            "Ensi\\InitialEventPropagation\\Tests\\": "tests"
         }
     },
     "scripts": {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Ensi\InitiatorPropagation;
+namespace Ensi\InitialEventPropagation;
 
-class InitiatorHolder
+class InitialEventHolder
 {
     private static array $instances = [];
 
-    protected ?InitiatorDTO $initiator = null;
+    protected ?InitialEventDTO $initiator = null;
 
     public static function getInstance(): static
     {
@@ -18,14 +18,14 @@ class InitiatorHolder
         return self::$instances[$className];
     }
 
-    public function setInitiator(InitiatorDTO $initiator): static
+    public function setInitiator(InitialEventDTO $initiator): static
     {
         $this->initiator = $initiator;
 
         return $this;
     }
 
-    public function getInitiator(): ?InitiatorDTO
+    public function getInitiator(): ?InitialEventDTO
     {
         return $this->initiator;
     }

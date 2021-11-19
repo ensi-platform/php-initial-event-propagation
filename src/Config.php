@@ -1,8 +1,8 @@
 <?php
 
-namespace Ensi\InitiatorPropagation;
+namespace Ensi\InitialEventPropagation;
 
 class Config
 {
-    public const REQUEST_HEADER = 'X-Initiator';
+    public const REQUEST_HEADER = 'X-Initial-Event';
 }

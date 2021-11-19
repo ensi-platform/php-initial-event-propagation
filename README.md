@@ -19,12 +19,12 @@ First of all you need to create initiator data and place it to holder:
 
 ```php
 
-use Ensi\InitiatorPropagation\InitiatorHolder;
-use Ensi\InitiatorPropagation\InitiatorDTO;
+use Ensi\InitialEventPropagation\InitialEventHolder;
+use Ensi\InitialEventPropagation\InitialEventDTO;
 
-InitiatorHolder::getInstance()
+InitialEventHolder::getInstance()
     ->setInitiator(
-        InitiatorDTO::fromScratch(
+        InitialEventDTO::fromScratch(
             userId: "1",
             userType: "admin",
             app: "mobile-api-gateway",
@@ -37,27 +37,27 @@ If you are not in initial entrypoint context to need to get Initiator from `X-In
 
 ```php
 
-use Ensi\InitiatorPropagation\Config;
-use Ensi\InitiatorPropagation\InitiatorHolder;
-use Ensi\InitiatorPropagation\InitiatorDTO;
+use Ensi\InitialEventPropagation\Config;
+use Ensi\InitialEventPropagation\InitialEventHolder;
+use Ensi\InitialEventPropagation\InitialEventDTO;
 
-InitiatorHolder::getInstance()
+InitialEventHolder::getInstance()
     ->setInitiator(
-        InitiatorDTO::fromSerializedString($request->header(Config::REQUEST_HEADER))
+        InitialEventDTO::fromSerializedString($request->header(Config::REQUEST_HEADER))
     );
 ```
 
-Next, extract DTO from holder (`InitiatorHolder::getInstance()->getInitiator`) and pass it to any futher outcomming requests (Guzzle, RabbitMQ, Kafka etc)
+Next, extract DTO from holder (`InitialEventHolder::getInstance()->getInitiator`) and pass it to any futher outcomming requests (Guzzle, RabbitMQ, Kafka etc)
 For example:
 ```php
 
-use Ensi\InitiatorPropagation\Config;
-use Ensi\InitiatorPropagation\InitiatorHolder;
+use Ensi\InitialEventPropagation\Config;
+use Ensi\InitialEventPropagation\InitialEventHolder;
 
 function some_middleware(callable $handler)
 {
     return function (RequestInterface $request, $options) use ($handler) {
-        $inititiator = InitiatorHolder::getInstance()->getInitiator();
+        $inititiator = InitialEventHolder::getInstance()->getInitiator();
 
         return $handler(
             $inititiator ? $request->withHeader(Config::REQUEST_HEADER, $inititiator->serialize()) : $request,
@@ -69,7 +69,7 @@ function some_middleware(callable $handler)
 
 ### Guzzle
 
-You can use built-in `Ensi\InitiatorPropagation\PropagateInitiatorGuzzleMiddleware` to propagate `X-Initiator` header to every outcomming guzzle request made by the given Guzzle handler: `$stack->push(new PropagateInitiatorGuzzleMiddleware());`
+You can use built-in `Ensi\InitialEventPropagation\PropagateInitiatorGuzzleMiddleware` to propagate `X-Initiator` header to every outcomming guzzle request made by the given Guzzle handler: `$stack->push(new PropagateInitiatorGuzzleMiddleware());`
 
 
 ## Contributing
