@@ -9,7 +9,8 @@ it('replaces commas with placeholder during serialization', function () {
         userId: "1",
         userType: "admin",
         app: "mobile,api",
-        entrypoint: "/api/v1/users/{id}"
+        entrypoint: "/api/v1/users/{id}",
+        misc: ""
     );
 
     $expected = 'correlationId=a95e90a3-82a3-4c77-82b2-4080a333456d,timestamp=2021-11-17T16:08:26.385954Z,app=mobile__COMMA__api,entrypoint=/api/v1/users/{id},userId=1,userType=admin';
@@ -25,7 +26,8 @@ it('can be created back from serialized string', function () {
         userId: "1",
         userType: "admin",
         app: "mobile,api",
-        entrypoint: "/api/v1/users/{id}"
+        entrypoint: "/api/v1/users/{id}",
+        misc: ""
     );
 
     expect(InitialEventDTO::fromSerializedString($serializedString))->toEqual($expected);
@@ -36,7 +38,8 @@ it('can be created from scratch without some fields', function () {
         userId: "1",
         userType: "admin",
         app: "mobile-api",
-        entrypoint: "/api/v1/users/{id}"
+        entrypoint: "/api/v1/users/{id}",
+        misc: "",
     );
 
     expect($dto->correlationId)->not->toBeEmpty();
@@ -46,5 +49,6 @@ it('can be created from scratch without some fields', function () {
         'userType' => "admin",
         'app' => "mobile-api",
         'entrypoint' => "/api/v1/users/{id}",
+        'misc' => "",
     ]);
 });
