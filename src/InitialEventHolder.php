@@ -18,7 +18,12 @@ class InitialEventHolder
         return self::$instances[$className];
     }
 
-    public function setInitialEvent(InitialEventDTO $initialEvent): static
+    public static function resetInstances(): void
+    {
+        self::$instances = [];
+    }
+
+    public function setInitialEvent(?InitialEventDTO $initialEvent): static
     {
         $this->initialEvent = $initialEvent;
 
