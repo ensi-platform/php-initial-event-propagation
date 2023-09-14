@@ -17,9 +17,9 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.2",
         "mockery/mockery": "^1.4",
-        "pestphp/pest": "^1.16",
+        "pestphp/pest": "^1.16 || ^2.0",
         "php-parallel-lint/php-var-dump-check": "^0.5.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0 || ^10.0"
     },
     "autoload": {
         "psr-4": {
@@ -36,6 +36,9 @@
         "test": "vendor/bin/pest"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
 }
