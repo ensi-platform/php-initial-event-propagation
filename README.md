@@ -13,6 +13,14 @@ You can install the package via composer:
 
 `composer require ensi/initial-event-propagation`
 
+## Version Compatibility
+
+| Laravel IEP | PHP  |
+|-------------|------|
+| ^0.1.0      | ^8.0 |
+| ^0.2.0      | ^8.0 |
+| ^0.3.0      | ^8.1 |
+
 ## Basic usage
 
 First of all you need to create initial event data and place it to holder:
@@ -74,8 +82,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 ### Testing
 
 1. composer install
-2. npm i
-3. composer test
+2. composer test
 
 ## Security Vulnerabilities
 
