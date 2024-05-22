@@ -11,7 +11,9 @@ This package helps to propagate initial event data to other backend services
 
 You can install the package via composer:
 
-`composer require ensi/initial-event-propagation`
+```bash
+composer require ensi/initial-event-propagation
+```
 
 ## Version Compatibility
 
