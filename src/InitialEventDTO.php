@@ -70,7 +70,7 @@ class InitialEventDTO
         $params = [];
         foreach (explode(",", $serializedData) as $keyWithValue) {
             [$key, $value] = explode("=", $keyWithValue);
-            $params[$key] = isset($value) ? str_replace('__COMMA__', ',', $value) : null;
+            $params[$key] = str_replace('__COMMA__', ',', $value);
         }
 
         return new static(
